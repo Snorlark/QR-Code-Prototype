@@ -15,7 +15,7 @@
             margin: 0;
             background-color: #f0f0f0;
         }
-        #scanner {
+        #reader {
             width: 300px;
             height: 300px;
             border: 2px solid #333;
@@ -32,58 +32,31 @@
     </style>
 </head>
 <body>
-    <div id="scanner"></div>
-    <button id="scanButton">Start/Stop Scan</button>
+    <div id="reader"></div>
     <div id="result"></div>
 
     <script src="https://unpkg.com/html5-qrcode"></script>
     <script>
-        const scanner = new Html5Qrcode("scanner");
         const resultContainer = document.getElementById("result");
-        let scanningStarted = false;
-
-        document.getElementById("scanButton").addEventListener("click", () => {
-            if (scanningStarted) {
-                stopScanning();
-            } else {
-                startScanning();
-            }
-        });
-
-        function startScanning() {
-            scanner.start(
-                { facingMode: "environment" },
-                {
-                    fps: 10,
-                    qrbox: { width: 250, height: 250 }
-                },
-                onScanSuccess,
-                onScanFailure
-            ).then(() => {
-                scanningStarted = true;
-            });
-        }
-
-        function stopScanning() {
-            scanner.stop().then(() => {
-                scanningStarted = false;
-            });
-        }
+        const scriptUrl = 'https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec';
 
         function onScanSuccess(decodedText, decodedResult) {
+            console.log(`Scan result: ${decodedText}`, decodedResult);
             processQRCode(decodedText);
-            stopScanning();
         }
 
-        function onScanFailure(error) {
-            console.warn(`QR code scan error: ${error}`);
+        function onScanError(errorMessage) {
+            console.error(errorMessage);
         }
+
+        let html5QrcodeScanner = new Html5QrcodeScanner(
+            "reader", { fps: 10, qrbox: 250 }
+        );
+        html5QrcodeScanner.render(onScanSuccess, onScanError);
 
         function processQRCode(qrData) {
+            console.log("Sending QR data:", qrData);
             resultContainer.innerHTML = "Processing...";
-
-            // Replace this URL with your Google Apps Script web app URL
-            const scriptUrl = 'https://script.google.com/macros/s/AKfycbwX5v7cP49iySKYhEJe_gU6tNd06zgG04dOmri7VgsUUC-sYRdtwuV_FC45LKeed9e-/exec';
 
             fetch(`${scriptUrl}?qrData=${encodeURIComponent(qrData)}`)
                 .then(response => response.text())
