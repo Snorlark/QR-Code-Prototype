@@ -83,7 +83,7 @@
             resultContainer.innerHTML = "Processing...";
 
             // Replace this URL with your Google Apps Script web app URL
-            const scriptUrl = 'https://script.google.com/macros/s/AKfycbwOiDCjJph3F7M1EzBvRUWHrvG2HaHruCSGgYgM7x-kCIf0ewfv1emRvPQ2kuWxWNEH/exec';
+            const scriptUrl = 'https://script.google.com/macros/s/AKfycbylogk6mkS7VcVNipNecrpDtxrMDIZOTSc6WqzHqnTrdP4jGmCJH5EUvDcKVNBP7K0/exec';
 
             fetch(`${scriptUrl}?qrData=${encodeURIComponent(qrData)}`)
                 .then(response => response.text())
