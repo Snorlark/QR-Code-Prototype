@@ -34,11 +34,13 @@
 <body>
     <div id="reader"></div>
     <div id="result"></div>
+    <input type="text" id="manualInput" placeholder="Enter QR data manually">
+    <button onclick="sendManualData()">Send Data</button>
 
     <script src="https://unpkg.com/html5-qrcode"></script>
     <script>
         const resultContainer = document.getElementById("result");
-        const scriptUrl = 'https://script.google.com/macros/s/AKfycby2kIEzNlA-PCrpV1fy_vWOLvLXjVReA2qpbF6el1DgblWxgImELmjtSiPIOvfgPOdo/exec';
+        const scriptUrl = 'https://script.google.com/macros/s/AKfycbwBwoccxBwOj3uba7meuHDtpYJvDqBO67RvQG8s7EmHD9dCHs0reOexKbteiFv47mnH/exec'; // Replace 'YOUR_SCRIPT_ID' with your actual script ID
 
         function onScanSuccess(decodedText, decodedResult) {
             console.log(`Scan result: ${decodedText}`, decodedResult);
@@ -58,14 +60,21 @@
             console.log("Sending QR data:", qrData);
             resultContainer.innerHTML = "Processing...";
 
-            const script = document.createElement('script');
-            script.src = `${scriptUrl}?qrData=${encodeURIComponent(qrData)}&callback=handleResponse`;
-            document.body.appendChild(script);
+            fetch(`${scriptUrl}?qrData=${encodeURIComponent(qrData)}`)
+                .then(response => response.text())
+                .then(result => {
+                    console.log("Received response:", result);
+                    resultContainer.innerHTML = result;
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                    resultContainer.innerHTML = `Error: ${error.message}`;
+                });
         }
 
-        function handleResponse(response) {
-            console.log("Received response:", response);
-            resultContainer.innerHTML = JSON.stringify(response);
+        function sendManualData() {
+            const qrData = document.getElementById("manualInput").value;
+            processQRCode(qrData);
         }
     </script>
 </body>
