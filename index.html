@@ -4,86 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QR Code Scanner</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #f0f0f0;
-        }
-        #scanner {
-            width: 300px;
-            height: 300px;
-            border: 2px solid #333;
-            margin-bottom: 20px;
-        }
-        #result {
-            margin-top: 20px;
-            padding: 10px;
-            border: 1px solid #ccc;
-            background-color: #fff;
-            max-width: 300px;
-            word-wrap: break-word;
-        }
-    </style>
 </head>
 <body>
-    <div id="scanner"></div>
-    <button id="scanButton">Start/Stop Scan</button>
     <div id="result"></div>
+    <input type="text" id="manualInput" placeholder="Enter QR data manually">
+    <button onclick="sendManualData()">Send Data</button>
 
-    <script src="https://unpkg.com/html5-qrcode"></script>
     <script>
-        const scanner = new Html5Qrcode("scanner");
         const resultContainer = document.getElementById("result");
-        let scanningStarted = false;
+        const scriptUrl = 'https://script.google.com/macros/s/AKfycbwX5v7cP49iySKYhEJe_gU6tNd06zgG04dOmri7VgsUUC-sYRdtwuV_FC45LKeed9e-/exec';
 
-        document.getElementById("scanButton").addEventListener("click", () => {
-            if (scanningStarted) {
-                stopScanning();
-            } else {
-                startScanning();
-            }
-        });
-
-        function startScanning() {
-            scanner.start(
-                { facingMode: "environment" },
-                {
-                    fps: 10,
-                    qrbox: { width: 250, height: 250 }
-                },
-                onScanSuccess,
-                onScanFailure
-            ).then(() => {
-                scanningStarted = true;
-            });
-        }
-
-        function stopScanning() {
-            scanner.stop().then(() => {
-                scanningStarted = false;
-            });
-        }
-
-        function onScanSuccess(decodedText, decodedResult) {
-            processQRCode(decodedText);
-            stopScanning();
-        }
-
-        function onScanFailure(error) {
-            console.warn(`QR code scan error: ${error}`);
+        function sendManualData() {
+            const qrData = document.getElementById("manualInput").value;
+            processQRCode(qrData);
         }
 
         function processQRCode(qrData) {
+            console.log("Sending QR data:", qrData);
             resultContainer.innerHTML = "Processing...";
-
-            // Replace this URL with your Google Apps Script web app URL
-            const scriptUrl = 'https://script.google.com/macros/s/AKfycbylogk6mkS7VcVNipNecrpDtxrMDIZOTSc6WqzHqnTrdP4jGmCJH5EUvDcKVNBP7K0/exec';
 
             fetch(`${scriptUrl}?qrData=${encodeURIComponent(qrData)}`)
                 .then(response => response.text())
