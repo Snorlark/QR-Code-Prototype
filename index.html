@@ -38,7 +38,7 @@
     <script src="https://unpkg.com/html5-qrcode"></script>
     <script>
         const resultContainer = document.getElementById("result");
-        const scriptUrl = 'https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec';
+        const scriptUrl = 'https://script.google.com/macros/s/AKfycby2kIEzNlA-PCrpV1fy_vWOLvLXjVReA2qpbF6el1DgblWxgImELmjtSiPIOvfgPOdo/exec';
 
         function onScanSuccess(decodedText, decodedResult) {
             console.log(`Scan result: ${decodedText}`, decodedResult);
@@ -58,14 +58,14 @@
             console.log("Sending QR data:", qrData);
             resultContainer.innerHTML = "Processing...";
 
-            fetch(`${scriptUrl}?qrData=${encodeURIComponent(qrData)}`)
-                .then(response => response.text())
-                .then(result => {
-                    resultContainer.innerHTML = result;
-                })
-                .catch(error => {
-                    resultContainer.innerHTML = `Error: ${error.message}`;
-                });
+            const script = document.createElement('script');
+            script.src = `${scriptUrl}?qrData=${encodeURIComponent(qrData)}&callback=handleResponse`;
+            document.body.appendChild(script);
+        }
+
+        function handleResponse(response) {
+            console.log("Received response:", response);
+            resultContainer.innerHTML = JSON.stringify(response);
         }
     </script>
 </body>
