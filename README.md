@@ -1,6 +1,15 @@
-# QR-Code-Prototype
+# **QR Code Generator & Scanner Prototype**
 
-- 1. Step 1: Fill out the Gooogle Forms: https://docs.google.com/forms/d/e/1FAIpQLSfI2mCJ3CViP05Zkh_LliTI6ZYdWnAIzfneYrI5P3pN4dPgCA/viewform?usp=sharing
-  2. Step 2: Go to the corresponding Google Sheets of the Forms: https://docs.google.com/spreadsheets/d/1G0nVE6Clfxzkdmbpwhyy7IKwx-4ye20gy75driw4juY/edit?resourcekey=&gid=706785063#gid=706785063
-  3. 
-  4. https://snorlark.github.io/QR-Code-Prototype/
+This repository contains the prototpy for Event Management QR Code Registration for the events of GDSC - NU Manila 2024-2025.
+
+
+| Steps | Links | Description |
+| :---         |     :---:      |       
+| week_1-2   | Review of OOP Basics (Encapsulation, Inheritance, Polymorphism)|
+| week_3   | Forms of Inheritance  |
+| week_4   | Programming by Contract |
+| week_5   | Subtyping versus Subclassing |
+| week_6   | Double dispatch  |
+| week_7   | Multiple Inheritance |
+| week_8-9  | Formal Models of OOP System (Unified modeling language and formal specification languages)|
+| week_10-13   | Design Patterns (Creational, Structural, Behavioral, Model-View-Controller) |
