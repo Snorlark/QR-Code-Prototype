@@ -3,7 +3,7 @@
 This repository contains the prototpy for Event Management QR Code Registration for the events of GDSC - NU Manila 2024-2025.
 
 
-| Steps | Links | Description |
+| Steps | Links |
 | :---         |     :---:      |       
 | week_1-2   | Review of OOP Basics (Encapsulation, Inheritance, Polymorphism)|
 | week_3   | Forms of Inheritance  |
