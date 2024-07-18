@@ -4,7 +4,7 @@ This repository contains the prototpy for Event Management QR Code Registration 
 
 
 | Steps | Links |
-| :---         |     :---:      |       
+|-----------------|-----------------|-----------------|
 | week_1-2   | Review of OOP Basics (Encapsulation, Inheritance, Polymorphism)|
 | week_3   | Forms of Inheritance  |
 | week_4   | Programming by Contract |
