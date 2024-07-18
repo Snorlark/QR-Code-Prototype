@@ -1,6 +1,6 @@
 # **QR Code Generator & Scanner Prototype**
 
-This repository contains the prototpy for Event Management QR Code Registration for the events of GDSC - NU Manila 2024-2025.
+This repository contains the prototype for Event Management QR Code Registration for the events of GDSC - NU Manila 2024-2025.
 
 
 | Parts | Links |
