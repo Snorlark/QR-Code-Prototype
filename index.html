@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QR Code Scanner</title>
     <style>
+        /* Basic styling for the page */
         body {
             font-family: Arial, sans-serif;
             display: flex;
@@ -32,46 +33,57 @@
     </style>
 </head>
 <body>
+    <!-- Container for the QR code reader -->
     <div id="reader"></div>
+    <!-- Container to display the result of the QR code scan -->
     <div id="result"></div>
+    <!-- Input field for manual QR data entry -->
     <input type="text" id="manualInput" placeholder="Enter QR data manually">
+    <!-- Button to send the manually entered QR data -->
     <button onclick="sendManualData()">Send Data</button>
 
+    <!-- Including the HTML5 QR code scanning library -->
     <script src="https://unpkg.com/html5-qrcode"></script>
     <script>
         const resultContainer = document.getElementById("result");
-        const scriptUrl = 'https://script.google.com/macros/s/AKfycbwBwoccxBwOj3uba7meuHDtpYJvDqBO67RvQG8s7EmHD9dCHs0reOexKbteiFv47mnH/exec'; // Replace 'YOUR_SCRIPT_ID' with your actual script ID
+        const scriptUrl = 'https://script.google.com/macros/s/AKfycbwBwoccxBwOj3uba7meuHDtpYJvDqBO67RvQG8s7EmHD9dCHs0reOexKbteiFv47mnH/exec'; // Replace with your actual script URL
 
+        // Function to handle successful QR code scans
         function onScanSuccess(decodedText, decodedResult) {
             console.log(`Scan result: ${decodedText}`, decodedResult);
             processQRCode(decodedText);
         }
 
+        // Function to handle scan errors
         function onScanError(errorMessage) {
             console.error(errorMessage);
         }
 
+        // Create and render the QR code scanner
         let html5QrcodeScanner = new Html5QrcodeScanner(
             "reader", { fps: 10, qrbox: 250 }
         );
         html5QrcodeScanner.render(onScanSuccess, onScanError);
 
+        // Function to process the QR code data
         function processQRCode(qrData) {
             console.log("Sending QR data:", qrData);
             resultContainer.innerHTML = "Processing...";
 
+            // Send the QR data to the Google Apps Script
             fetch(`${scriptUrl}?qrData=${encodeURIComponent(qrData)}`)
                 .then(response => response.text())
                 .then(result => {
                     console.log("Received response:", result);
-                    resultContainer.innerHTML = result;
+                    resultContainer.innerHTML = result; // Display the result in the result container
                 })
                 .catch(error => {
                     console.error("Error:", error);
-                    resultContainer.innerHTML = `Error: ${error.message}`;
+                    resultContainer.innerHTML = `Error: ${error.message}`; // Display error message if fetch fails
                 });
         }
 
+        // Function to send manually entered QR data
         function sendManualData() {
             const qrData = document.getElementById("manualInput").value;
             processQRCode(qrData);
